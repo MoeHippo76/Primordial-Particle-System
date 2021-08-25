@@ -2,13 +2,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.JFrame;
+import java.awt.event.KeyListener;
+import java.awt.event.KeyEvent;
 
 
-public class Frame extends JFrame {
+public class Frame extends JFrame implements KeyListener{
     private Image raster;
     private Graphics rGraphics;
     private final int height;
     private final int width;
+    private  boolean keyPressed;
 
 
     Frame(int height, int width){
@@ -18,6 +21,8 @@ public class Frame extends JFrame {
         setSize(width,height);
         setVisible(true);
         setup();
+        keyPressed = true;
+        addKeyListener(this);
     }
 
     public void setup(){
@@ -34,7 +39,7 @@ public class Frame extends JFrame {
 
     public void draw(){
         int t = 0;
-        while(true)
+        while(keyPressed)
         {
             drawBG();  //draws background
             particles();
@@ -57,5 +62,18 @@ public class Frame extends JFrame {
         rGraphics.fillRect(0,0,width,height);
     }
 
+    public void keyTyped(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+            keyPressed = false;
+    }
+
+    public void keyPressed(KeyEvent e){
+        if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+            keyPressed = false;
+    }
+
+    public void keyReleased(KeyEvent e){
+
+    }
 
 }
